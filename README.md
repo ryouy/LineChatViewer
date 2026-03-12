@@ -104,7 +104,6 @@ GEMINI_API_KEY=your_gemini_api_key
 | メッセージタイプ | Photos→仮画像(picsum)、Stickers→スタンプカード、Canceled→取り消し表示 |
 | URLリンク | 自動検出、クリック可能、target="_blank" |
 | 検索 | fuse.js、本文・送信者、ハイライト・ジャンプ |
-| トーク再生 | 順番再生、速度変更 |
 | PDF出力 | html2canvas + jsPDF、複数ページ |
 | 共有URL | トークを圧縮してURL生成、/share?d=xxx で再表示 |
 | AI要約 | Gemini API、会話のテーマ・重要な出来事・結論 |
@@ -131,7 +130,6 @@ line-chat-viewer/
 │   ├── ChatMessageRow.tsx
 │   ├── SearchBar.tsx
 │   ├── SearchResultsPanel.tsx
-│   ├── PlaybackControls.tsx
 │   ├── PdfExportButton.tsx
 │   ├── ShareButton.tsx
 │   ├── SummarizeButton.tsx

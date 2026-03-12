@@ -24,6 +24,11 @@ export function PdfExportButton({
     setIsExporting(true);
     try {
       await exportChatToPdf(el, filename);
+    } catch (err) {
+      console.error("PDF export error:", err);
+      alert(
+        "PDFの出力に失敗しました。トークが長い場合や画像が多い場合は、スクロールして上部から少しずつ試してみてください。"
+      );
     } finally {
       setIsExporting(false);
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FileDropzone } from "@/components/FileDropzone";
 import { ChatListPanel } from "@/components/ChatListPanel";
@@ -11,18 +11,10 @@ export default function HomePage() {
   const router = useRouter();
   const initFromCookies = useChatStore((s) => s.initFromCookies);
   const sessions = useChatStore((s) => s.sessions);
-  const prevSessionCount = useRef(0);
 
   useEffect(() => {
     initFromCookies();
   }, [initFromCookies]);
-
-  useEffect(() => {
-    if (sessions.length > prevSessionCount.current) {
-      router.push("/chat");
-    }
-    prevSessionCount.current = sessions.length;
-  }, [sessions.length, router]);
 
   return (
     <div className="min-h-screen flex">

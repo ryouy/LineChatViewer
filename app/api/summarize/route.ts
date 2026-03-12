@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       .join("\n");
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const result = await model.generateContent(`${SYSTEM_PROMPT}\n\n---\n\n${chatText}`);
     const response = result.response;

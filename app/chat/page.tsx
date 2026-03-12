@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { ChatHeader } from "@/components/ChatHeader";
 import { ChatViewport } from "@/components/ChatViewport";
 import { SearchResultsPanel } from "@/components/SearchResultsPanel";
-import { PlaybackControls } from "@/components/PlaybackControls";
 import { PdfExportButton } from "@/components/PdfExportButton";
 import { SenderSelectDialog } from "@/components/SenderSelectDialog";
 import { useSearch } from "@/hooks/useSearch";
@@ -130,13 +129,6 @@ export default function ChatPage() {
                 />
               </div>
             )}
-          </div>
-
-          <div className="p-2 border-t bg-background">
-            <PlaybackControls
-              messages={messages}
-              onScrollTo={handleSearchScroll}
-            />
           </div>
         </div>
 
