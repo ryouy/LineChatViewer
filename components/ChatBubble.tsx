@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { ChatMessage } from "@/types/chat";
 import type { ThemeConfig } from "@/types/theme";
@@ -62,18 +63,20 @@ export function ChatBubble({ message, theme, isHighlighted }: ChatBubbleProps) {
       case "photo":
         return (
           <div className="flex flex-col gap-1">
-            <div
-              className="w-48 h-32 rounded-lg bg-muted flex items-center justify-center text-muted-foreground text-sm"
-              style={{ backgroundColor: isMine ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.05)" }}
-            >
-              📷 写真
-            </div>
+            <Image
+              src="https://picsum.photos/300/200"
+              alt="写真"
+              width={192}
+              height={128}
+              className="w-48 h-32 rounded-lg object-cover"
+            />
           </div>
         );
       case "sticker":
         return (
-          <div className="w-20 h-20 rounded-lg bg-muted/50 flex items-center justify-center text-2xl">
-            🎭
+          <div className="w-24 h-24 rounded-xl border-2 border-dashed flex flex-col items-center justify-center bg-muted/30 px-3 py-2">
+            <span className="text-2xl mb-1">🎭</span>
+            <span className="text-[10px] text-muted-foreground">スタンプ</span>
           </div>
         );
       case "video":

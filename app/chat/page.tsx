@@ -20,6 +20,8 @@ import { useChatStore } from "@/store/chatStore";
 import { Search, Settings, Users } from "lucide-react";
 import { FriendListPanel } from "@/components/FriendListPanel";
 import { ThemeSettingsPanel } from "@/components/ThemeSettingsPanel";
+import { ShareButton } from "@/components/ShareButton";
+import { SummarizeButton } from "@/components/SummarizeButton";
 
 export default function ChatPage() {
   const router = useRouter();
@@ -100,6 +102,8 @@ export default function ChatPage() {
               <Settings className="size-4" />
             </Button>
             <div className="flex-1" />
+            <ShareButton />
+            <SummarizeButton />
             <PdfExportButton
               viewportRef={viewportRef}
               filename={session.title}

@@ -3,22 +3,21 @@
 ## 1. 全体設計
 
 ### 目的
-- LINE履歴TXTをアップロードして、LINE風UIでトークを再現する
-- GitHubへpushしてVercelで公開できる構成
-- UIはLINEっぽく、実装は保守しやすく
+- LINE履歴TXTを読み込み、LINEに近いUIでトークを閲覧する
+- ローカル開発 → GitHub公開 → Vercelデプロイを前提
 
 ### アーキテクチャ
-- **フロントエンド**: Next.js App Router + React
-- **状態管理**: Zustand（chatStore, themeStore）
+- **フロント**: Next.js App Router + React
+- **状態管理**: Zustand (chatStore)
 - **永続化**: Cookie（自分の名前、テーマ）
-- **パーサー**: 正規表現ベース、堅牢なエラーハンドリング
+- **共有**: lz-string で圧縮しURLに埋め込み
+- **AI**: Gemini API（/api/summarize）
 
-## 2. データ設計
+---
 
-### ChatMessage
+## 2. データ型
+
 ```typescript
-type MessageType = "text" | "sticker" | "photo" | "video" | "system" | "canceled" | "unknown";
-
 type ChatMessage = {
   id: string;
   sender: string;
@@ -26,61 +25,65 @@ type ChatMessage = {
   time: string;
   date: string;
   timestamp: number;
-  type: MessageType;
+  type: "text" | "photo" | "sticker" | "system" | "canceled";
   isMine: boolean;
-  rawLine?: string;
 };
-```
 
-### ChatSession
-```typescript
 type ChatSession = {
   id: string;
   title: string;
-  participants: string[];
   messages: ChatMessage[];
-  sourceFileName: string;
-  importedAt: number;
+  participants: string[];
 };
 ```
 
-## 3. ディレクトリ構成
+---
+
+## 3. ディレクトリ構成（推奨）
 
 ```
-line-chat-viewer/
-├── app/              # ページ
-├── components/       # UIコンポーネント
-├── hooks/            # カスタムフック
-├── lib/              # ユーティリティ・パーサー・PDF
-├── store/            # Zustandストア
-├── types/            # 型定義
-└── styles/           # グローバルスタイル
+src/
+├── app/
+├── components/
+├── hooks/
+├── lib/
+│   ├── parser/
+│   ├── pdf/
+│   └── utils/
+├── store/
+└── types/
 ```
+
+※ 本プロジェクトはルート直下に配置（Next.js標準）
+
+---
 
 ## 4. 主要フロー
 
 ### ファイル読み込み
-1. FileDropzoneでTXTをドロップ
-2. parseLineChatで解析
-3. 参加者が2人以上ならSenderSelectDialog表示
-4. 自分の名前を選択（Cookie保存）
-5. /chatへ遷移
+1. FileDropzone で TXT をドロップ
+2. parseLineChat で解析
+3. 参加者2人以上 → SenderSelectDialog
+4. 自分の名前を選択 → Cookie 保存
+5. /chat へ遷移
 
-### 検索
-1. useSearchでfuse.js初期化
-2. クエリ入力でresults更新
-3. 結果クリックでscrollToMessage
-4. 該当メッセージにハイライト（2秒）
+### 共有URL
+1. 「共有」クリック → createShareUrl()
+2. messages + participants を JSON → lz-string 圧縮
+3. /share?d=xxx をクリップボードにコピー
+4. 他者がアクセス → parseShareData() → loadFromShare() → /chat
 
-### テーマ
-1. chatStore.setThemeでテーマID更新
-2. Cookieに保存
-3. THEMESからThemeConfig取得
-4. ChatViewport/ChatBubbleで適用
+### AI要約
+1. 「AI要約」クリック → POST /api/summarize
+2. messages を送信
+3. Gemini API で要約生成
+4. ダイアログに表示
+
+---
 
 ## 5. 実装方針
 
-- パーサーは堅牢に（warningsで失敗行を記録）
+- 型安全
 - 巨大コンポーネントを避ける
-- 長文・大量メッセージでもパフォーマンスを考慮
-- 型安全を徹底
+- パーサーは堅牢に（warnings で失敗行を記録）
+- UI を安っぽくしない

@@ -33,6 +33,11 @@ type ChatState = {
   confirmSender: (name: string) => void;
   clearNeedsSenderSelect: () => void;
   initFromCookies: () => void;
+  loadFromShare: (data: {
+    messages: ChatMessage[];
+    participants: string[];
+    title: string;
+  }) => void;
 };
 
 export const useChatStore = create<ChatState>((set, get) => ({
@@ -110,4 +115,34 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   clearNeedsSenderSelect: () => set({ needsSenderSelect: false }),
+
+  loadFromShare: (data) => {
+    const { myName } = get();
+    const resolvedMyName =
+      myName && data.participants.includes(myName)
+        ? myName
+        : data.participants[0] ?? "";
+    const withIsMine = data.messages.map((m) => ({
+      ...m,
+      isMine: m.sender === resolvedMyName,
+    }));
+
+    const session: ChatSession = {
+      id: `session-share-${Date.now()}`,
+      title: data.title,
+      participants: data.participants,
+      messages: withIsMine,
+      sourceFileName: "共有",
+      importedAt: Date.now(),
+    };
+
+    if (resolvedMyName) setCookie(MY_NAME_COOKIE, resolvedMyName);
+
+    set((state) => ({
+      sessions: [...state.sessions, session],
+      activeSessionId: session.id,
+      myName: resolvedMyName,
+      needsSenderSelect: false,
+    }));
+  },
 }));
