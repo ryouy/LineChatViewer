@@ -65,9 +65,7 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold text-gray-800 mb-3 tracking-tight">
             LINE トーク履歴ビューアー
           </h1>
-          <p className="text-gray-600 mb-2">
-            トーク一覧から選択するか、新しいTXTをアップロード
-          </p>
+          
           <p className="text-sm text-gray-500 mb-6">
             LINEでエクスポートしたTXTファイルをドロップ
           </p>

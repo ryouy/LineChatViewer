@@ -68,7 +68,7 @@ export function FileDropzone() {
         >
           {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴TXTをドラッグ＆ドロップ"}
         </p>
-        <p className="text-sm text-gray-500">またはクリックしてファイルを選択（.txt・複数可）</p>
+        
       </div>
     </div>
   );
