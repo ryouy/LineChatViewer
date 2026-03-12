@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FileDropzone } from "@/components/FileDropzone";
 import { ChatListPanel } from "@/components/ChatListPanel";
+import { cn } from "@/lib/utils";
 import { useChatStore } from "@/store/chatStore";
 
 export default function HomePage() {
@@ -25,7 +26,12 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex">
-      <aside className="w-72 border-r bg-muted/30 hidden md:block">
+      <aside
+        className={cn(
+          "w-72 border-r bg-muted/30 flex-shrink-0",
+          sessions.length === 0 && "hidden md:block"
+        )}
+      >
         <div className="p-4 border-b">
           <h2 className="font-semibold">トーク一覧</h2>
         </div>

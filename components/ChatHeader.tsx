@@ -28,7 +28,7 @@ export function ChatHeader({ title }: ChatHeaderProps) {
         type="button"
         onClick={() => router.push("/")}
         className="p-1 -ml-1 rounded-lg hover:bg-white/20 transition-colors"
-        aria-label="戻る"
+        aria-label="トーク一覧に戻る"
       >
         <ChevronLeft className="size-6" />
       </button>

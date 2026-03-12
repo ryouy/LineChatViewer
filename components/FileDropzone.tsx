@@ -5,19 +5,24 @@ import { useDropzone } from "react-dropzone";
 import { useChatStore } from "@/store/chatStore";
 import { cn } from "@/lib/utils";
 
+function readFileAsText(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => resolve((e.target?.result as string) || "");
+    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.readAsText(file, "UTF-8");
+  });
+}
+
 export function FileDropzone() {
   const loadFromFile = useChatStore((s) => s.loadFromFile);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = (e.target?.result as string) || "";
+    async (acceptedFiles: File[]) => {
+      for (const file of acceptedFiles) {
+        const content = await readFileAsText(file);
         loadFromFile(content, file.name);
-      };
-      reader.readAsText(file, "UTF-8");
+      }
     },
     [loadFromFile]
   );
@@ -25,7 +30,6 @@ export function FileDropzone() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "text/plain": [".txt"] },
-    maxFiles: 1,
   });
 
   return (
@@ -44,7 +48,7 @@ export function FileDropzone() {
       <p className="text-center text-muted-foreground font-medium">
         {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴TXTをドラッグ＆ドロップ"}
       </p>
-      <p className="text-sm text-muted-foreground/70">またはクリックしてファイルを選択（.txtのみ）</p>
+      <p className="text-sm text-muted-foreground/70">またはクリックしてファイルを選択（.txt・複数可）</p>
     </div>
   );
 }
