@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "LINE トーク履歴ビューアー",
   description: "LINEのトーク履歴TXTをアップロードして、LINE風UIで復元",
+  icons: {
+    icon: "/favicon.ico?v=2",
+  },
 };
 
 export default function RootLayout({

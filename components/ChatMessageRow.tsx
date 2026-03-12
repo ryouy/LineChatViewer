@@ -55,8 +55,8 @@ export function ChatMessageRow({
         })()}
         <div
           className={cn(
-            "flex min-w-0 flex-1 gap-1",
-            isSystem ? "flex-col items-center w-full" : isMine ? "flex-col items-end w-full" : "flex-col items-start"
+            "flex flex-1 gap-1",
+            isSystem ? "flex-col items-center w-full min-w-0" : isMine ? "flex-col items-end w-full min-w-[min(200px,100%)]" : "flex-col items-start w-full min-w-0"
           )}
         >
           {showSenderName && (

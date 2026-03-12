@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { Users, Settings, Share2, FileDown } from "lucide-react";
+import { Users, Settings, FileDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type ChatMenuDropdownProps = {
@@ -10,7 +10,6 @@ type ChatMenuDropdownProps = {
   anchorRef: React.RefObject<HTMLButtonElement | null>;
   onOpenFriends: () => void;
   onOpenSettings: () => void;
-  onShare: () => void;
   onPdfExport: () => void;
   className?: string;
 };
@@ -21,7 +20,6 @@ export function ChatMenuDropdown({
   anchorRef,
   onOpenFriends,
   onOpenSettings,
-  onShare,
   onPdfExport,
   className,
 }: ChatMenuDropdownProps) {
@@ -74,17 +72,6 @@ export function ChatMenuDropdown({
       >
         <Settings className="size-4" />
         設定
-      </button>
-      <button
-        type="button"
-        className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-muted"
-        onClick={() => {
-          onShare();
-          onClose();
-        }}
-      >
-        <Share2 className="size-4" />
-        共有
       </button>
       <button
         type="button"

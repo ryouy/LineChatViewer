@@ -18,14 +18,14 @@ const SAMPLES = [
 
 export default function HomePage() {
   const router = useRouter();
-  const initFromCookies = useChatStore((s) => s.initFromCookies);
+  const initFromStorage = useChatStore((s) => s.initFromStorage);
   const loadFromFile = useChatStore((s) => s.loadFromFile);
   const sessions = useChatStore((s) => s.sessions);
   const [loadingSample, setLoadingSample] = useState<string | null>(null);
 
   useEffect(() => {
-    initFromCookies();
-  }, [initFromCookies]);
+    initFromStorage();
+  }, [initFromStorage]);
 
   const loadSample = async (path: string, name: string) => {
     setLoadingSample(path);

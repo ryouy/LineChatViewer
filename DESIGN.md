@@ -10,7 +10,6 @@
 - **フロント**: Next.js App Router + React
 - **状態管理**: Zustand (chatStore)
 - **永続化**: Cookie（自分の名前、テーマ）
-- **共有**: lz-string で圧縮しURLに埋め込み
 
 ---
 
@@ -65,12 +64,6 @@ src/
 3. 参加者2人以上 → SenderSelectDialog
 4. 自分の名前を選択 → Cookie 保存
 5. /chat へ遷移
-
-### 共有URL
-1. 「共有」クリック → createShareUrl()
-2. messages + participants を JSON → lz-string 圧縮
-3. /share?d=xxx をクリップボードにコピー
-4. 他者がアクセス → parseShareData() → loadFromShare() → /chat
 
 ---
 

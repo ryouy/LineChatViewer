@@ -111,10 +111,7 @@ export function ChatBubble({ message, theme, isHighlighted }: ChatBubbleProps) {
         );
       default:
         return (
-          <p
-            className="text-sm break-words text-justify"
-            style={{ textAlignLast: "justify" }}
-          >
+          <p className="text-sm break-words text-left">
             {linkifyText(message.text)}
           </p>
         );
@@ -126,7 +123,7 @@ export function ChatBubble({ message, theme, isHighlighted }: ChatBubbleProps) {
   return (
     <div
       className={cn(
-        "inline-flex max-w-[95%] rounded-[18px] px-4 py-2.5",
+        "inline-flex max-w-[95%] min-w-0 rounded-[18px] px-4 py-2.5",
         isMine && "ml-auto"
       )}
       style={{

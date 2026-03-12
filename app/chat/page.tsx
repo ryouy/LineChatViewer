@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useChatStore } from "@/store/chatStore";
-import { createShareUrl } from "@/lib/utils/share";
 import { FriendListPanel } from "@/components/FriendListPanel";
 import { ThemeSettingsPanel } from "@/components/ThemeSettingsPanel";
 
@@ -33,7 +32,7 @@ export default function ChatPage() {
 
   const sessions = useChatStore((s) => s.sessions);
   const activeSessionId = useChatStore((s) => s.activeSessionId);
-  const initFromCookies = useChatStore((s) => s.initFromCookies);
+  const initFromStorage = useChatStore((s) => s.initFromStorage);
 
   const session = sessions.find((s) => s.id === activeSessionId);
   const messages = session?.messages ?? [];
@@ -48,8 +47,8 @@ export default function ChatPage() {
   } = useSearch(messages);
 
   useEffect(() => {
-    initFromCookies();
-  }, [initFromCookies]);
+    initFromStorage();
+  }, [initFromStorage]);
 
   useEffect(() => {
     if (sessions.length === 0) {
@@ -63,16 +62,6 @@ export default function ChatPage() {
     },
     [scrollToMessage]
   );
-
-  const handleShare = useCallback(async () => {
-    if (!session) return;
-    const url = createShareUrl(session);
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      window.open(url, "_blank");
-    }
-  }, [session]);
 
   if (!session) {
     return (
@@ -98,13 +87,12 @@ export default function ChatPage() {
           anchorRef={menuButtonRef}
           onOpenFriends={() => setShowFriends(true)}
           onOpenSettings={() => setShowSettings(true)}
-          onShare={handleShare}
           onPdfExport={() => pdfExportRef.current?.trigger()}
         />
       </header>
 
       <div className="flex-1 flex min-h-0">
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-[min(280px,100%)]">
           <div className="flex-1 flex min-h-0">
             <ChatViewport
               ref={viewportRef}
