@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { getPhotoUrl, getStickerUrl } from "@/lib/imageConfig";
 import type { ChatMessage } from "@/types/chat";
 import type { ThemeConfig } from "@/types/theme";
 
@@ -60,46 +61,80 @@ export function ChatBubble({ message, theme, isHighlighted }: ChatBubbleProps) {
 
   const displayContent = () => {
     switch (message.type) {
-      case "photo":
+      case "photo": {
+        const photoSrc = getPhotoUrl(message.id);
         return (
           <div className="flex flex-col gap-1">
             <Image
-              src="https://picsum.photos/300/200"
+              src={photoSrc}
               alt="写真"
               width={192}
               height={128}
               className="w-48 h-32 rounded-lg object-cover"
+              unoptimized={photoSrc.startsWith("http")}
             />
           </div>
         );
-      case "sticker":
+      }
+      case "sticker": {
+        const stickerSrc = getStickerUrl(message.id);
         return (
-          <div className="w-24 h-24 rounded-xl border-2 border-dashed flex flex-col items-center justify-center bg-muted/30 px-3 py-2">
-            <span className="text-2xl mb-1">🎭</span>
-            <span className="text-[10px] text-muted-foreground">スタンプ</span>
-          </div>
+          <Image
+            src={stickerSrc}
+            alt="スタンプ"
+            width={96}
+            height={96}
+            className="w-24 h-24 rounded-xl object-cover"
+            unoptimized={stickerSrc.startsWith("http")}
+          />
         );
+      }
       case "video":
         return (
           <div className="w-48 h-28 rounded-lg bg-muted flex items-center justify-center text-muted-foreground text-sm">
             🎬 動画
           </div>
         );
+      case "call":
+        return (
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-lg">📞</span>
+            <span>通話</span>
+          </div>
+        );
+      case "videoCall":
+        return (
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-lg">📹</span>
+            <span>ビデオ通話</span>
+          </div>
+        );
       default:
-        return <p className="text-sm break-words">{linkifyText(message.text)}</p>;
+        return (
+          <p
+            className="text-sm break-words text-justify"
+            style={{ textAlignLast: "justify" }}
+          >
+            {linkifyText(message.text)}
+          </p>
+        );
     }
   };
+
+  const bubbleColor = isMine ? theme.bubbleMine : theme.bubbleOther;
 
   return (
     <div
       className={cn(
-        "flex max-w-[75%] rounded-2xl px-4 py-2.5 shadow-sm",
-        isMine ? "rounded-br-md ml-auto" : "rounded-bl-md"
+        "inline-flex max-w-[95%] rounded-[18px] px-4 py-2.5",
+        isMine && "ml-auto"
       )}
       style={{
-        backgroundColor: isMine ? theme.bubbleMine : theme.bubbleOther,
+        backgroundColor: bubbleColor,
         color: isMine ? theme.bubbleMineText : theme.bubbleOtherText,
-        boxShadow: isHighlighted ? "0 0 0 2px var(--primary)" : undefined,
+        boxShadow: isHighlighted
+          ? "0 0 0 2px var(--primary), 0 1px 1px rgba(0,0,0,0.06)"
+          : "0 1px 1px rgba(0,0,0,0.06)",
       }}
     >
       {displayContent()}

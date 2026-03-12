@@ -1,15 +1,40 @@
 import type { ChatMessage, MessageType } from "@/types/chat";
 import dayjs from "dayjs";
 
+// 日付行: 英語曜日 or 日本語曜日
 const DATE_PATTERN =
-  /^(\d{4})\.(\d{2})\.(\d{2})\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$/i;
+  /^(\d{4})[.\/](\d{2})[.\/](\d{2})\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|月曜日|火曜日|水曜日|木曜日|金曜日|土曜日|日曜日)$/i;
 const MESSAGE_PATTERN = /^(\d{2}:\d{2})\s+(.+?)\s+(.+)$/;
 
 const SPECIAL_TYPES: Record<string, MessageType> = {
+  // 写真 (EN/JA)
   Photos: "photo",
+  Photo: "photo",
+  写真: "photo",
+  // スタンプ (EN/JA)
   Stickers: "sticker",
+  Sticker: "sticker",
+  スタンプ: "sticker",
+  // 動画 (EN/JA)
   Video: "video",
+  Videos: "video",
+  動画: "video",
+  // 取消 (EN/JA)
   Canceled: "canceled",
+  Cancelled: "canceled",
+  取消: "canceled",
+  取消済み: "canceled",
+  キャンセル: "canceled",
+  // 通話・音声 (EN/JA)
+  "通話": "call",
+  "音声通話": "call",
+  Call: "call",
+  "Voice call": "call",
+  "Voice Call": "call",
+  // ビデオ通話 (EN/JA)
+  "ビデオ通話": "videoCall",
+  "Video call": "videoCall",
+  "Video Call": "videoCall",
 };
 
 export type ParseOutput = {

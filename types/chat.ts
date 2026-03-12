@@ -3,6 +3,8 @@ export type MessageType =
   | "sticker"
   | "photo"
   | "video"
+  | "call"
+  | "videoCall"
   | "system"
   | "canceled"
   | "unknown";

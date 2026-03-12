@@ -11,14 +11,6 @@ export async function exportChatToPdf(
     useCORS: true,
     logging: false,
     backgroundColor: "#e5ddd5",
-    // 外部画像（picsum等）をスキップして tainted canvas エラーを回避
-    ignoreElements: (el) => {
-      if (el.tagName === "IMG") {
-        const src = (el as HTMLImageElement).src || (el as HTMLImageElement).getAttribute("src");
-        if (src?.startsWith("http")) return true;
-      }
-      return false;
-    },
   });
 
   const imgData = canvas.toDataURL("image/png");

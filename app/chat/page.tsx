@@ -4,8 +4,9 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ChatHeader } from "@/components/ChatHeader";
 import { ChatViewport } from "@/components/ChatViewport";
+import { ChatMenuDropdown } from "@/components/ChatMenuDropdown";
 import { SearchResultsPanel } from "@/components/SearchResultsPanel";
-import { PdfExportButton } from "@/components/PdfExportButton";
+import { PdfExportButton, type PdfExportHandle } from "@/components/PdfExportButton";
 import { SenderSelectDialog } from "@/components/SenderSelectDialog";
 import { useSearch } from "@/hooks/useSearch";
 import {
@@ -16,18 +17,19 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useChatStore } from "@/store/chatStore";
-import { Search, Settings, Users } from "lucide-react";
+import { createShareUrl } from "@/lib/utils/share";
 import { FriendListPanel } from "@/components/FriendListPanel";
 import { ThemeSettingsPanel } from "@/components/ThemeSettingsPanel";
-import { ShareButton } from "@/components/ShareButton";
-import { SummarizeButton } from "@/components/SummarizeButton";
 
 export default function ChatPage() {
   const router = useRouter();
   const viewportRef = useRef<HTMLDivElement>(null);
+  const pdfExportRef = useRef<PdfExportHandle>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [showSearch, setShowSearch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const sessions = useChatStore((s) => s.sessions);
   const activeSessionId = useChatStore((s) => s.activeSessionId);
@@ -62,6 +64,16 @@ export default function ChatPage() {
     [scrollToMessage]
   );
 
+  const handleShare = useCallback(async () => {
+    if (!session) return;
+    const url = createShareUrl(session);
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.open(url, "_blank");
+    }
+  }, [session]);
+
   if (!session) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -74,50 +86,35 @@ export default function ChatPage() {
     <div className="h-screen flex flex-col">
       <SenderSelectDialog />
 
-      <ChatHeader />
+      <header className="relative shrink-0">
+        <ChatHeader
+          onSearchClick={() => setShowSearch(!showSearch)}
+          onMenuClick={() => setShowMenu(!showMenu)}
+          menuButtonRef={menuButtonRef}
+        />
+        <ChatMenuDropdown
+          open={showMenu}
+          onClose={() => setShowMenu(false)}
+          anchorRef={menuButtonRef}
+          onOpenFriends={() => setShowFriends(true)}
+          onOpenSettings={() => setShowSettings(true)}
+          onShare={handleShare}
+          onPdfExport={() => pdfExportRef.current?.trigger()}
+        />
+      </header>
 
       <div className="flex-1 flex min-h-0">
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="flex items-center gap-2 p-2 border-b bg-background/95">
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => setShowSearch(!showSearch)}
-            >
-              <Search className="size-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => setShowFriends(!showFriends)}
-            >
-              <Users className="size-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => setShowSettings(!showSettings)}
-            >
-              <Settings className="size-4" />
-            </Button>
-            <div className="flex-1" />
-            <ShareButton />
-            <SummarizeButton />
-            <PdfExportButton
-              viewportRef={viewportRef}
-              filename={session.title}
-            />
-          </div>
-
           <div className="flex-1 flex min-h-0">
             <ChatViewport
               ref={viewportRef}
               messages={messages}
               highlightId={highlightId}
+              isGroup={session.participants.length > 1}
             />
 
             {showSearch && (
-              <div className="w-80 shrink-0">
+              <div className="w-80 shrink-0 border-l">
                 <SearchResultsPanel
                   query={query}
                   setQuery={setQuery}
@@ -147,6 +144,15 @@ export default function ChatPage() {
             />
           </aside>
         )}
+      </div>
+
+      <div className="sr-only" aria-hidden>
+        <PdfExportButton
+          ref={pdfExportRef}
+          messages={messages}
+          filename={session.title}
+          isGroup={session.participants.length > 1}
+        />
       </div>
 
       <Dialog open={showSettings} onOpenChange={setShowSettings}>

@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useChatStore } from "@/store/chatStore";
 import { cn } from "@/lib/utils";
+import { Upload, FileText } from "lucide-react";
 
 function readFileAsText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -36,19 +37,39 @@ export function FileDropzone() {
     <div
       {...getRootProps()}
       className={cn(
-        "border-2 border-dashed rounded-xl p-12 cursor-pointer transition-all duration-200",
-        "flex flex-col items-center justify-center gap-4 min-h-[220px] w-full max-w-md",
+        "relative overflow-hidden rounded-2xl p-10 cursor-pointer transition-all duration-300",
+        "flex flex-col items-center justify-center gap-5 min-h-[240px] w-full",
+        "border-2 border-dashed",
+        "bg-white/70 backdrop-blur-sm shadow-lg",
         isDragActive
-          ? "border-primary bg-primary/5 scale-[1.02]"
-          : "border-muted-foreground/30 hover:border-primary/50 hover:bg-muted/30"
+          ? "border-[#00B900] bg-[#00B900]/10 scale-[1.02] shadow-[#00B900]/20"
+          : "border-gray-300/80 hover:border-[#00B900]/60 hover:bg-white/90 hover:shadow-xl"
       )}
     >
       <input {...getInputProps()} />
-      <div className="text-5xl">📱</div>
-      <p className="text-center text-muted-foreground font-medium">
-        {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴TXTをドラッグ＆ドロップ"}
-      </p>
-      <p className="text-sm text-muted-foreground/70">またはクリックしてファイルを選択（.txt・複数可）</p>
+      <div
+        className={cn(
+          "flex items-center justify-center size-16 rounded-2xl transition-colors",
+          isDragActive ? "bg-[#00B900]/20" : "bg-gray-100"
+        )}
+      >
+        {isDragActive ? (
+          <Upload className="size-8 text-[#00B900]" />
+        ) : (
+          <FileText className="size-8 text-gray-500" />
+        )}
+      </div>
+      <div className="space-y-1">
+        <p
+          className={cn(
+            "text-center font-medium transition-colors",
+            isDragActive ? "text-[#00B900]" : "text-gray-700"
+          )}
+        >
+          {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴TXTをドラッグ＆ドロップ"}
+        </p>
+        <p className="text-sm text-gray-500">またはクリックしてファイルを選択（.txt・複数可）</p>
+      </div>
     </div>
   );
 }

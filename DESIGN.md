@@ -11,7 +11,6 @@
 - **状態管理**: Zustand (chatStore)
 - **永続化**: Cookie（自分の名前、テーマ）
 - **共有**: lz-string で圧縮しURLに埋め込み
-- **AI**: Gemini API（/api/summarize）
 
 ---
 
@@ -72,12 +71,6 @@ src/
 2. messages + participants を JSON → lz-string 圧縮
 3. /share?d=xxx をクリップボードにコピー
 4. 他者がアクセス → parseShareData() → loadFromShare() → /chat
-
-### AI要約
-1. 「AI要約」クリック → POST /api/summarize
-2. messages を送信
-3. Gemini API で要約生成
-4. ダイアログに表示
 
 ---
 
