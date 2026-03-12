@@ -1,6 +1,6 @@
 # [LINE Chat History Viewer](https://line-chat-viewer.vercel.app)
 
-A web application that parses LINE chat export TXT files and renders them in a familiar messaging-style interface. Drop a file, pick your name, and browse.
+A web application that parses LINE chat export .txt files and renders them in a familiar messaging-style interface. Drop a file, pick your name, and browse.
 
 ## Stack
 
@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Features
 
-- **Upload** — Drag-and-drop TXT import. `.txt` only.
+- **Upload** — Drag-and-drop .txt import. `..txt` only.
 - **Parser** — Regex-based extraction of date lines and message lines. Handles `Photos`, `Stickers`, `Video`, `Canceled` tokens.
 - **Sender identification** — Select your name from the participant list for each chat. Messages are colored accordingly.
 - **UI** — Right-aligned green bubbles for you, left-aligned gray for others. Date separators, grouped consecutive messages.

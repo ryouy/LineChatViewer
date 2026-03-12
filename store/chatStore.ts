@@ -61,7 +61,7 @@ export const useChatStore = create<ChatState>()((set, get) => ({
 
     const session: ChatSession = {
       id: `session-${Date.now()}`,
-      title: filename.replace(/\.txt$/i, "") || "トーク",
+      title: filename.replace(/\..txt$/i, "") || "トーク",
       participants,
       messages: withIsMine,
       sourceFileName: filename,

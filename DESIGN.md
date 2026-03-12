@@ -3,7 +3,7 @@
 ## 1. 全体設計
 
 ### 目的
-- LINE履歴TXTを読み込み、LINEに近いUIでトークを閲覧する
+- LINE履歴.txtを読み込み、LINEに近いUIでトークを閲覧する
 - ローカル開発 → GitHub公開 → Vercelデプロイを前提
 
 ### アーキテクチャ
@@ -59,7 +59,7 @@ src/
 ## 4. 主要フロー
 
 ### ファイル読み込み
-1. FileDropzone で TXT をドロップ
+1. FileDropzone で .txt をドロップ
 2. parseLineChat で解析
 3. 参加者2人以上 → SenderSelectDialog
 4. 自分の名前を選択 → Cookie 保存

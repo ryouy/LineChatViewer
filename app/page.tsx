@@ -10,10 +10,10 @@ import { MessageCircle, User, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const SAMPLES = [
-  { path: "/samples/personal1.txt", name: "個人会話1", icon: User },
-  { path: "/samples/personal2.txt", name: "個人会話2", icon: User },
-  { path: "/samples/group1.txt", name: "5人グループ1", icon: Users },
-  { path: "/samples/group2.txt", name: "5人グループ2", icon: Users },
+  { path: "/samples/personal1..txt", name: "個人会話1", icon: User },
+  { path: "/samples/personal2..txt", name: "個人会話2", icon: User },
+  { path: "/samples/group1..txt", name: "5人グループ1", icon: Users },
+  { path: "/samples/group2..txt", name: "5人グループ2", icon: Users },
 ] as const;
 
 export default function HomePage() {
@@ -32,7 +32,7 @@ export default function HomePage() {
     try {
       const res = await fetch(path);
       const content = await res.text();
-      loadFromFile(content, `${name}.txt`);
+      loadFromFile(content, `${name}..txt`);
       router.push("/chat");
     } catch {
       alert("サンプルの読み込みに失敗しました");
@@ -42,32 +42,34 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0]">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0]">
       <aside
         className={cn(
-          "w-72 flex-shrink-0 bg-white/80 backdrop-blur-sm border-r border-white/50 shadow-sm",
-          sessions.length === 0 && "hidden md:block"
+          "w-full md:w-72 flex-shrink-0 flex flex-col bg-white/80 backdrop-blur-sm border-b md:border-b-0 md:border-r border-white/50 shadow-sm min-h-0",
+          sessions.length === 0 && "hidden md:flex"
         )}
       >
-        <div className="p-5 border-b border-black/5">
+        <div className="p-5 border-b border-black/5 shrink-0">
           <div className="flex items-center gap-2">
             <MessageCircle className="size-5 text-[#00B900]" />
             <h2 className="font-semibold text-gray-800">トーク一覧</h2>
           </div>
         </div>
-        <ChatListPanel onSelectSession={() => router.push("/chat")} />
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          <ChatListPanel onSelectSession={() => router.push("/chat")} />
+        </div>
       </aside>
-      <main className="flex-1 flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-lg text-center">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 min-w-0 min-h-0 overflow-y-auto">
+        <div className="w-full max-w-lg text-center shrink-0">
           <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-white/90 shadow-lg mb-6">
             <MessageCircle className="size-8 text-[#00B900]" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-3 tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-800 mb-3 tracking-tight">
             LINE トーク履歴ビューアー
           </h1>
           
           <p className="text-sm text-gray-500 mb-6">
-            LINEでエクスポートしたTXTファイルをドロップ
+            LINEでエクスポートした.txtファイルをドロップ
           </p>
           <FileDropzone />
           <div className="mt-8 pt-8 border-t border-gray-200/60">

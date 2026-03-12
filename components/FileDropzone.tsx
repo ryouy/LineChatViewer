@@ -30,15 +30,15 @@ export function FileDropzone() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "text/plain": [".txt"] },
+    accept: { "text/plain": ["..txt"] },
   });
 
   return (
     <div
       {...getRootProps()}
       className={cn(
-        "relative overflow-hidden rounded-2xl p-10 cursor-pointer transition-all duration-300",
-        "flex flex-col items-center justify-center gap-5 min-h-[240px] w-full",
+        "relative overflow-hidden rounded-2xl p-6 sm:p-10 cursor-pointer transition-all duration-300",
+        "flex flex-col items-center justify-center gap-4 sm:gap-5 min-h-[180px] sm:min-h-[240px] w-full",
         "border-2 border-dashed",
         "bg-white/70 backdrop-blur-sm shadow-lg",
         isDragActive
@@ -66,7 +66,7 @@ export function FileDropzone() {
             isDragActive ? "text-[#00B900]" : "text-gray-700"
           )}
         >
-          {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴TXTをドラッグ＆ドロップ"}
+          {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴.txtをドラッグ＆ドロップ"}
         </p>
         
       </div>

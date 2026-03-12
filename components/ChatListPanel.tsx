@@ -21,7 +21,7 @@ export function ChatListPanel({ className, onSelectSession }: ChatListPanelProps
     return (
       <div className={cn("p-6 text-center", className)}>
         <p className="text-sm text-gray-500">トークがありません</p>
-        <p className="text-xs text-gray-400 mt-1">TXTをアップロードするとここに表示されます</p>
+        <p className="text-xs text-gray-400 mt-1">.txtをアップロードするとここに表示されます</p>
       </div>
     );
   }
