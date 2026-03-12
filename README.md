@@ -1,4 +1,4 @@
-# LINE Chat History Viewer
+# [LINE Chat History Viewer](https://line-chat-viewer.vercel.app)
 
 A web application that parses LINE chat export TXT files and renders them in a familiar messaging-style interface. Drop a file, pick your name, and browse.
 
