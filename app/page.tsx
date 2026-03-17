@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FileDropzone } from "@/components/FileDropzone";
 import { ChatListPanel } from "@/components/ChatListPanel";
-import { cn } from "@/lib/utils";
 import { useChatStore } from "@/store/chatStore";
 import { MessageCircle, User, Users } from "lucide-react";
 
@@ -19,7 +18,6 @@ export default function HomePage() {
   const router = useRouter();
   const initFromStorage = useChatStore((s) => s.initFromStorage);
   const loadFromFile = useChatStore((s) => s.loadFromFile);
-  const sessions = useChatStore((s) => s.sessions);
   const [loadingSample, setLoadingSample] = useState<string | null>(null);
 
   useEffect(() => {
