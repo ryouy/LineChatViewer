@@ -67,9 +67,7 @@ export function ChatListPanel({
       ))}
       {hasSamples && (
         <div className={cn("flex flex-wrap items-center gap-1.5", hasSessions && "pt-1")}>
-          {hasSessions && (
-            <span className="text-xs text-gray-500 shrink-0">サンプル:</span>
-          )}
+          <span className="text-xs font-medium text-gray-600 shrink-0">サンプル:</span>
           {samples.map(({ path, name, icon: Icon }) => (
             <button
               key={path}
