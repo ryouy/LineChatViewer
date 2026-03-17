@@ -34,7 +34,7 @@ export function ChatHeader({ title, onSearchClick, onMenuClick, menuButtonRef }:
         type="button"
         onClick={() => router.push("/")}
         className="p-1.5 -ml-1 rounded-lg hover:bg-white/20 transition-colors shrink-0"
-        aria-label="トーク一覧に戻る"
+        aria-label="トークリストに戻る"
       >
         <ChevronLeft className="size-6" />
       </button>

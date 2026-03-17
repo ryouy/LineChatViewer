@@ -62,11 +62,18 @@ export function FileDropzone() {
       <div className="space-y-1">
         <p
           className={cn(
-            "text-center font-medium transition-colors",
+            "text-center font-medium transition-colors text-sm sm:text-base px-2",
             isDragActive ? "text-[#00B900]" : "text-gray-700"
           )}
         >
-          {isDragActive ? "ここにドロップ..." : "LINEのトーク履歴.txtをドラッグ＆ドロップ"}
+          {isDragActive ? (
+            "ここにドロップ..."
+          ) : (
+            <>
+              <span className="hidden sm:inline">LINEのトーク履歴.txtをドラッグ＆ドロップ</span>
+              <span className="sm:hidden">タップしてファイルを選択</span>
+            </>
+          )}
         </p>
         
       </div>

@@ -42,7 +42,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-dvh min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0] overflow-x-hidden">
+    <div className="min-h-dvh min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0] overflow-x-hidden pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)]">
       <aside
         className={cn(
           "w-full md:w-72 flex-shrink-0 flex flex-col bg-white/80 backdrop-blur-sm border-b md:border-b-0 md:border-r border-white/50 shadow-sm min-h-0",
@@ -52,15 +52,15 @@ export default function HomePage() {
         <div className="p-5 border-b border-black/5 shrink-0">
           <div className="flex items-center gap-2">
             <MessageCircle className="size-5 text-[#00B900]" />
-            <h2 className="font-semibold text-gray-800">トーク一覧</h2>
+            <h2 className="font-semibold text-gray-800">トークリスト</h2>
           </div>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto">
           <ChatListPanel onSelectSession={() => router.push("/chat")} />
         </div>
       </aside>
-      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden safe-area-inset">
-        <div className="w-full max-w-lg text-center shrink-0 px-[env(safe-area-inset-left)] px-[env(safe-area-inset-right)]">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden">
+        <div className="w-full max-w-lg text-center shrink-0">
           <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-white/90 shadow-lg mb-6">
             <MessageCircle className="size-8 text-[#00B900]" />
           </div>
