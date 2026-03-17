@@ -16,9 +16,10 @@ export function useSearch(messages: ChatMessage[]) {
   const fuse = useMemo(
     () =>
       new Fuse(messages, {
-        keys: ["sender", "text", "date", "time"],
+        keys: ["text"],
         threshold: 0.3,
         includeScore: true,
+        minMatchCharLength: 1,
       }),
     [messages]
   );
