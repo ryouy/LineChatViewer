@@ -42,7 +42,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0]">
+    <div className="min-h-dvh min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#e8e4df] via-[#e5ddd5] to-[#ddd8d0] overflow-x-hidden">
       <aside
         className={cn(
           "w-full md:w-72 flex-shrink-0 flex flex-col bg-white/80 backdrop-blur-sm border-b md:border-b-0 md:border-r border-white/50 shadow-sm min-h-0",
@@ -59,8 +59,8 @@ export default function HomePage() {
           <ChatListPanel onSelectSession={() => router.push("/chat")} />
         </div>
       </aside>
-      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 min-w-0 min-h-0 overflow-y-auto">
-        <div className="w-full max-w-lg text-center shrink-0">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden safe-area-inset">
+        <div className="w-full max-w-lg text-center shrink-0 px-[env(safe-area-inset-left)] px-[env(safe-area-inset-right)]">
           <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-white/90 shadow-lg mb-6">
             <MessageCircle className="size-8 text-[#00B900]" />
           </div>
