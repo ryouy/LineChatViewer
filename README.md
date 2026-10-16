@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Features
 
-- **Upload** — Drag-and-drop .txt import. `..txt` only.
+- **Upload** — Drag-and-drop `.txt` import.
 - **Parser** — Regex-based extraction of date lines and message lines. Handles `Photos`, `Stickers`, `Video`, `Canceled` tokens.
 - **Sender identification** — Select your name from the participant list for each chat. Messages are colored accordingly.
 - **UI** — Right-aligned green bubbles for you, left-aligned gray for others. Date separators, grouped consecutive messages.
@@ -74,3 +74,9 @@ Git push to GitHub, then connect the repo to Vercel. Framework preset: Next.js. 
 ## License
 
 MIT
+
+## Build and privacy notes
+
+Run `npm run build` to check the production build locally; run `npm run start` after a successful build to test the production server.
+
+LINE exports can contain sensitive personal conversations and names. Use test data while developing, avoid committing exported chats to Git, and review the privacy and data-handling practices of any hosted instance before importing real chat histories.
